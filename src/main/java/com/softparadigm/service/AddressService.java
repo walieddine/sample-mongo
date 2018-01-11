@@ -1,4 +1,4 @@
-package com.softparadigm.service;
+/*package com.softparadigm.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,3 +19,4 @@ public class AddressService {
 	}
 	
 }
+*/

@@ -23,11 +23,15 @@ public class User implements Serializable {
 	private String name;
 	private String age;
 	private String dateOfBirth;
-	@DBRef
+	/*
+	 *  branch without ONe to One 
+	 * @DBRef
 	@CascadeSave
-	private Address address;
-
-	@JsonIgnore
+	private Address address;*/
+    private String email;
+    private String address;
+	
+    @JsonIgnore
 	private Collection<Product> products;
 
 	public User() {
@@ -35,7 +39,7 @@ public class User implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(String id, String name, String age, String dateOfBirth, Address address) {
+	/*public User(String id, String name, String age, String dateOfBirth, Address address) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -43,6 +47,15 @@ public class User implements Serializable {
 		this.dateOfBirth = dateOfBirth;
 		this.address = address;
 		// this.products=products;
+	}*/
+	public User(String id, String name, String age, String dateOfBirth, String  email,String address) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.age = age;
+		this.dateOfBirth = dateOfBirth;
+		this.address = address;
+		 this.email=email;
 	}
 
 	public String getId() {
@@ -77,19 +90,36 @@ public class User implements Serializable {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public Address getAddress() {
+/*	public Address getAddress() {
 		return address;
 	}
 
 	public void setAddress(Address address) {
 		this.address = address;
-	}
+	}*/
 
+	
 	public Collection<Product> getProducts() {
 		return products;
 	}
 
 	
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	public void setProducts(Collection<Product> products) {
 		this.products = products;
 	}

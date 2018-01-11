@@ -1,4 +1,4 @@
-package com.softparadigm.repository;
+/*package com.softparadigm.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -10,3 +10,4 @@ public interface AddressRepository extends MongoRepository<Address, String> {
 	Address findById(String id);
 	
 }
+*/

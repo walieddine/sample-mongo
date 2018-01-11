@@ -20,11 +20,11 @@ import com.softparadigm.domain.User;
 import com.softparadigm.repository.UserRepository;
 import com.softparadigm.service.UserService;
 
-//@RunWith(SpringRunner.class)
-//@SpringBootTest
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class SampleecommerceApplicationTests {
 
-	/*User userTest = new User();
+	User userTest = new User();
 	Address addressTest = new Address();
 	List<User> listUsers = new ArrayList();
 
@@ -42,7 +42,7 @@ public class SampleecommerceApplicationTests {
 		addressTest.setId("1");
 		userTest.setAge("29");
 		userTest.setName("test");
-		userTest.setAddress(addressTest);
+		//userTest.setAddress(addressTest);
 		userTest.setDateOfBirth("1989");
 		listUsers.add(userTest);
 	}
@@ -64,8 +64,10 @@ public class SampleecommerceApplicationTests {
 	
 	@Test
 	public void testfindAll() {
+		
 		when(daoUserMock.findAll()).thenReturn(listUsers);
-		assertEquals(service.findByName("test"),userTest);
-	}*/
+		List<User> users=service.findAll();
+		assertEquals(1,users.size());
+	}
 
 }

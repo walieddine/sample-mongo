@@ -7,10 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.softparadigm.domain.Address;
 import com.softparadigm.domain.Product;
 import com.softparadigm.domain.User;
-import com.softparadigm.repository.AddressRepository;
 import com.softparadigm.repository.ProductRepository;
 import com.softparadigm.repository.UserRepository;
 
@@ -21,8 +19,7 @@ public class UserService {
 	UserRepository userRepository;
 	@Autowired
 	ProductRepository productRepository;
-	@Autowired
-	AddressRepository addressRepository;
+	
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public User save(User user) {
@@ -32,15 +29,11 @@ public class UserService {
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void updateuser(User user) {
 		User updated = userRepository.findById(user.getId());
-		Address oldadress = new Address();
+		//System.out.println("updated "+updated.getId());
 		
-		System.out.println(updated.toString()+" "+updated.getId()+" ");
-		System.out.println(updated.getAddress().getId());
-		oldadress.setId(updated.getAddress().getId());
-		oldadress.setAddress(user.getAddress().getAddress());
-		oldadress.setEmail(user.getAddress().getEmail());
-		addressRepository.save(oldadress);
-		updated.setAddress(oldadress);
+		
+		//addressRepository.save(oldadress);
+		//updated.setAddress(oldadress);
 		updated.setAge(user.getAge());
 		updated.setDateOfBirth(user.getDateOfBirth());
 		updated.setName(user.getName());
@@ -69,14 +62,23 @@ public class UserService {
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteById(String id) {
-		addressRepository.deleteById(userRepository.findById(id).getAddress().getId());
-		productRepository.delete(productRepository.findAllByUser(id));
+	List<Product> products = productRepository.findAllByUser(id);
+		for (Product product : products) {
+			product.setUser(null);
+			
+		}
+		productRepository.save(products);	
+		
 		userRepository.deleteById(id);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED)
 	public void deleteAll() {
 		userRepository.deleteAll();
+	}
+	@Transactional(propagation = Propagation.REQUIRED)
+	public void deleteuser(User user) {
+		userRepository.delete(user);
 	}
 
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)

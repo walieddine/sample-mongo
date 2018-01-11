@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,6 +24,7 @@ import com.softparadigm.service.ProductService;
 import com.softparadigm.service.UserService;
 import com.softparadigm.util.CustomErrorType;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -39,6 +42,16 @@ public class UserController {
 					new CustomErrorType("Unable to create. A user with name " + user.getName() + " already exist."),
 					HttpStatus.CONFLICT);
 		}
+		userService.save(user);
+		HttpHeaders headers = new HttpHeaders();
+		headers.setLocation(builder.path("/users/{id}").buildAndExpand(user.getId()).toUri());
+		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
+
+	}
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@PatchMapping
+	public ResponseEntity<?> patchUser(@RequestBody User user, UriComponentsBuilder builder) {
+		
 		userService.save(user);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(builder.path("/users/{id}").buildAndExpand(user.getId()).toUri());
@@ -112,7 +125,7 @@ public class UserController {
 	@PutMapping
 	public ResponseEntity<?> updateUser(@RequestBody User user, UriComponentsBuilder builder) {
 		
-		userService.updateuser(user);
+		userService.save(user);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(builder.path("/users/{id}").buildAndExpand(user.getId()).toUri());
 		return new ResponseEntity<String>(headers, HttpStatus.CREATED);

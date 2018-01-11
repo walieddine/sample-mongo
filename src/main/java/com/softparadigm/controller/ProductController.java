@@ -64,10 +64,10 @@ public class ProductController {
 	@PutMapping()
 	public ResponseEntity<?> updateProduct(@RequestBody Product product, UriComponentsBuilder builder) {
 		// Product productlast = productService.findOne(id);
-		System.out.println("product update"+product.getId()+" "+product.getDescription());
+		//System.out.println("product update"+product.getId()+" "+product.getDescription());
 
 		System.out.println("product" + product.toString());
-		productService.updateProduct(product);
+		productService.save(product);
 		HttpHeaders headers = new HttpHeaders();
 		headers.setLocation(builder.path("/product/{id}").buildAndExpand(product.getId()).toUri());
 		return new ResponseEntity<String>(headers, HttpStatus.CREATED);
